@@ -1,5 +1,7 @@
 package com.example.balls2;
 
+import android.widget.TextView;
+
 public class Board {
     private int[][] board;
     private boolean Status = false;
@@ -11,7 +13,6 @@ public class Board {
     public int[][] getBoard() {
         return board;
     }
-
     public boolean isStatus() {
         return Status;
     }
@@ -35,8 +36,7 @@ public class Board {
         this.board[i + 1][j] = temp4;
         this.board[i][j + 1] = temp1;
         this.board[i + 1][j + 1] = temp2;
-
-        return Board.this;
+        return this;
         //вот тут может быть баг
     }
 
