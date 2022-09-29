@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
             {0, 0, 0},
             {0, 1, 0},};
     int steps = 0;
+    Board board = new Board(arr);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         tA3.setText(String.valueOf(arr[2][1]));
         TextView tA4 = findViewById(R.id.textView4);
         tA4.setText(String.valueOf(steps));
-        if (arr[0][1] == 1 && arr[1][1] == 1 && arr[2][1] == 1) {
+
+        if (board.Win()) {
             Intent intent = new Intent(this, Result.class);
             intent.putExtra("steps", steps);
             startActivity(intent);
@@ -64,15 +66,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        int temp1 = arr[0][0];
-        int temp2 = arr[0][1];
-        int temp3 = arr[1][0];
-        int temp4 = arr[1][1];
-
-        arr[0][0] = temp3;
-        arr[0][1] = temp1;
-        arr[1][0] = temp4;
-        arr[1][1] = temp2;
+        board.Move(0, 0);
 
         //TextView tA1= findViewById(R.id.textView);
         //tA1.setText( String.valueOf(myDrawable) );
@@ -97,16 +91,9 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
+        board.Move(0, 1);
 
-        int temp1 = arr[0][1];
-        int temp2 = arr[0][2];
-        int temp3 = arr[1][1];
-        int temp4 = arr[1][2];
 
-        arr[0][1] = temp3;
-        arr[0][2] = temp1;
-        arr[1][1] = temp4;
-        arr[1][2] = temp2;
         Win();
     }
 
@@ -128,15 +115,9 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        int temp1 = arr[1][0];
-        int temp2 = arr[1][1];
-        int temp3 = arr[2][0];
-        int temp4 = arr[2][1];
+        board.Move(1, 0);
 
-        arr[1][0] = temp3;
-        arr[1][1] = temp1;
-        arr[2][0] = temp4;
-        arr[2][1] = temp2;
+
         Win();
     }
 
@@ -158,34 +139,38 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
+        board.Move(1, 1);
 
-        int temp1 = arr[1][1];
-        int temp2 = arr[1][2];
-        int temp3 = arr[2][1];
-        int temp4 = arr[2][2];
-
-        arr[1][1] = temp3;
-        arr[1][2] = temp1;
-        arr[2][1] = temp4;
-        arr[2][2] = temp2;
         Win();
     }
 
+
+    //todo существуют два стека
+    // один не с пройденными --> A (при (нажатие на кнопку читов) / создание сразу занесены 4 состояния нажатия кнопок)
+    // с пройденными состояниями --> B
+    // temp --> в который копируется взятый массив
+    // while (!Win()){
+    //      из стека A берем readTop() и у него проверяем на совпадение с уже пройденными состояниями и с победой,
+    //      если ничего не прошло то создаем от него еще 4 состояния которые заносим в стэк А, а данное состояние заносим в пройденные.
+    //      если совпало уже с пройденными состояниями в стеке B, то удаляем это и берем следующее в стеке А
+    // }
+
+
+    //todo Первым делом уже в цикле КОПИРУЕШЬ элемент из стека, то есть тот самый первый, который занёc
+    // И у скопированного создаёшь детей, попутно проверяя на наличие таких состояний в А и В
+    // После создания дочерей, вытаскиваешь из А тпроверенное состояние и суешь в В
+    // И после копирования из А не забудь проверить на конец
+
     public void Cheats(View view) {
-        //todo существуют два стека
-        // один не с пройденными --> A (при (нажатие на кнопку читов) / создание сразу занесены 4 состояния нажатия кнопок)
-        // с пройденными состояниями --> B
-        // while (!Win()){
-        //      из стека A берем readTop() и у него проверяем на совпадение с уже пройденными состояниями и с победой,
-        //      если ничего не прошло то создаем от него еще 4 состояния которые заносим в стэк А, а данное состояние заносим в пройденные.
-        //      если совпало уже с пройденными состояниями в стеке B, то удаляем это и берем следующее в стеке А
-        // }
+        int mas = 1000;
+        Stack A = new Stack(mas);
+        Stack B = new Stack(mas);
+        Stack Temp = new Stack(mas);
 
+        while (!board.Win()) {
 
-        //todo Первым делом уже в цикле КОПИРУЕШЬ элемент из стека, то есть тот самый первый, который занёc
-        // И у скопированного создаёшь детей, попутно проверяя на наличие таких состояний в А и В
-        // После создания дочерей, вытаскиваешь из А тпроверенное состояние и суешь в В
-        // И после копирования из А не забудь проверить на конец
+        }
+
 
     }
 }

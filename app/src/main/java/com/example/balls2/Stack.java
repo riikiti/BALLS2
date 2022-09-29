@@ -3,22 +3,24 @@ package com.example.balls2;
 public class Stack {
 
     private int mSize; //mSize - максимальный размер
-    private int[] stackArray;
+    private Board [] stackArray;
     private int top;
+
+
 
     public Stack(int m) {
         this.mSize = m;
-        stackArray = new int[mSize];
+        stackArray = new Board[mSize];
         top = -1;
     }
-    public void addElement(int element) {
+    public void addElement(Board element) {
         stackArray[++top] = element;
     }
 
-    public int deleteElement() {
+    public Board deleteElement() {
         return stackArray[top--];
     }
-    public int readTop() {
+    public Board readTop() {
         return stackArray[top];
     }
     public boolean isEmpty() {
@@ -28,3 +30,4 @@ public class Stack {
         return (top == mSize - 1);
     }
 }
+
