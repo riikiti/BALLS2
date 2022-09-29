@@ -1,7 +1,5 @@
 package com.example.balls2;
 
-import android.content.Intent;
-
 public class Board {
     private int[][] board;
     private boolean Status = false;
@@ -26,16 +24,20 @@ public class Board {
         Status = status;
     }
 
-    public void Move(int i, int j){
+    public Board Move(int i, int j, int[][] board) {
+
         int temp1 = this.board[i][j];
-        int temp2 = this.board[i][j+1];
-        int temp3 = this.board[i+1][j];
-        int temp4 = this.board[i+1][j+1];
+        int temp2 = this.board[i][j + 1];
+        int temp3 = this.board[i + 1][j];
+        int temp4 = this.board[i + 1][j + 1];
 
         this.board[i][j] = temp3;
-        this.board[i+1][j] = temp4;
-        this.board[i][j+1] = temp1;
-        this.board[i+1][j+1] = temp2;
+        this.board[i + 1][j] = temp4;
+        this.board[i][j + 1] = temp1;
+        this.board[i + 1][j + 1] = temp2;
+
+        return Board.this;
+        //вот тут может быть баг
     }
 
     public boolean Win() {

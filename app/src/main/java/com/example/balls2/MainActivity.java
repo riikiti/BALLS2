@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class MainActivity extends AppCompatActivity {
     int[][] arr = {{1, 0, 1},
             {0, 0, 0},
@@ -30,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void Win() {
         TextView tA1 = findViewById(R.id.textView);
-        tA1.setText(String.valueOf(arr[0][1]));
+        tA1.setText(String.valueOf(board.getBoard()[0][1]));
         TextView tA2 = findViewById(R.id.textView2);
-        tA2.setText(String.valueOf(arr[1][1]));
+        tA2.setText(String.valueOf(board.getBoard()[1][1]));
         TextView tA3 = findViewById(R.id.textView3);
-        tA3.setText(String.valueOf(arr[2][1]));
+        tA3.setText(String.valueOf(board.getBoard()[2][1]));
         TextView tA4 = findViewById(R.id.textView4);
         tA4.setText(String.valueOf(steps));
 
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(0, 0);
+        board.Move(0, 0,board.getBoard());
 
         //TextView tA1= findViewById(R.id.textView);
         //tA1.setText( String.valueOf(myDrawable) );
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(0, 1);
+        board.Move(0, 1,board.getBoard());
 
 
         Win();
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(1, 0);
+        board.Move(1, 0,board.getBoard());
 
 
         Win();
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(1, 1);
+        board.Move(1, 1,board.getBoard());
 
         Win();
     }
@@ -163,14 +167,65 @@ public class MainActivity extends AppCompatActivity {
 
     public void Cheats(View view) {
         int mas = 1000;
-        Stack A = new Stack(mas);
-        Stack B = new Stack(mas);
-        Stack Temp = new Stack(mas);
+        Stack A = new Stack(mas); // стек не пройденные
+        ArrayList<Board> B = new ArrayList<Board>(); // список пройденные
+        // Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
+        // Road.add(board);
+        Board Temp = board; //заносим текущий борд во временный
+        TextView tA1 = findViewById(R.id.textView);
 
-        while (!board.Win()) {
+
+
+
+        while (!Temp.Win()) {
+            B.add(Temp);
+            steps++;
+            Board temp1 = Temp;
+            // создали 4 новых состояния борда аля нажатия клавиш
+            A.addElement(Temp.Move(0, 0,board.getBoard()));
+
+
+
+            int [][] arr =A.readTop().getBoard();
+            String s = " ";
+
+            for (int i = 0; i < arr.length; i++){
+                for (int j = 0; j < arr.length; j++){
+                    s += String.valueOf(arr[i][j]);
+
+                }
+            }
+
+
+            //Temp.setBoard(temp1.getBoard());
+            A.addElement(Temp.Move(0, 1,board.getBoard()));
+           // Temp.setBoard(temp1.getBoard());
+            A.addElement(Temp.Move(1, 0,board.getBoard()));
+           // Temp.setBoard(temp1.getBoard());
+            A.addElement(Temp.Move(1, 1,board.getBoard()));
+            //Temp.setBoard(temp1.getBoard());
+
+
+            tA1.setText(s);
+            break;
+            /*
+            for (Board el : B) {
+                if (Temp.getBoard() == el.getBoard()) {
+                    A.deleteElement();
+                    // Road.add(Temp);
+                } else {
+                    Temp = A.readTop();
+                }
+            }
+        */
 
         }
+        board = Temp;
+        board.Win();
+        /*
+        for (int i = 0; i < B.size(); i++){
 
-
+        }
+*/
     }
 }
