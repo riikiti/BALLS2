@@ -3,29 +3,39 @@ package com.example.balls2;
 import android.widget.TextView;
 
 public class Board {
-    private int[][] board;
+    private int[][] board = new int[3][3];
     private boolean Status = false;
 
+
     public Board(int[][] board) {
-        this.board = board;
+        System.arraycopy(board, 0, this.board, 0, board.length);
     }
 
     public int[][] getBoard() {
         return board;
     }
+
     public boolean isStatus() {
         return Status;
     }
 
     public void setBoard(int[][] board) {
-        this.board = board;
+         System.arraycopy(board, 0, this.board, 0, 9);
+/*
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                this.board[i][j] = board[i][j];
+            }
+        }
+        */
+
     }
 
     public void setStatus(boolean status) {
         Status = status;
     }
 
-    public Board Move(int i, int j, int[][] board) {
+    public Board Move(int i, int j) {
 
         int temp1 = this.board[i][j];
         int temp2 = this.board[i][j + 1];

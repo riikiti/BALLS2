@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(0, 0, board.getBoard());
+        board.Move(0, 0);
 
         //TextView tA1= findViewById(R.id.textView);
         //tA1.setText( String.valueOf(myDrawable) );
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(0, 1, board.getBoard());
+        board.Move(0, 1);
 
 
         Win();
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(1, 0, board.getBoard());
+        board.Move(1, 0);
 
 
         Win();
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         img3.setImageDrawable(myDrawable3);
         img1.setImageDrawable(myDrawable4);
 
-        board.Move(1, 1, board.getBoard());
+        board.Move(1, 1);
 
         Win();
     }
@@ -171,37 +171,21 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Board> B = new ArrayList<Board>(); // список пройденные
         // Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
-        Board Temp = board; //заносим текущий борд во временный
-
+        Board Temp = new Board(board.getBoard()); //заносим текущий борд во временный
+        Board temp1 = new Board(arr);
 
         while (!Temp.Win()) {
             B.add(Temp);
             steps++;
-            Board temp1 = Temp;
+            //temp1.setBoard(Temp.getBoard());
             // создали 4 новых состояния борда аля нажатия клавиш
-            A.addElement(Temp.Move(0, 0, board.getBoard()));
-            A.addElement(Temp.Move(0, 1, board.getBoard()));
-            A.addElement(Temp.Move(1, 0, board.getBoard()));
-            A.addElement(Temp.Move(1, 1, board.getBoard()));
+            A.addElement(Temp.Move(0, 0));
 
             // тоже как то надо проверить но я хз когда
-            if (A.isEmpty()) {
-                break;
-            }
-            for (Board el : B) {
-                if (Temp.getBoard() == el.getBoard()) {
-                    A.deleteElement();
-                    // Road.add(Temp);
-                } else {
-                    Temp = A.readTop();
-                }
-            }
-
-
 
 
             TextView tA1 = findViewById(R.id.textView);
-            int[][] arr1 = A.readTop().getBoard();
+            int[][] arr1 = temp1.getBoard();
             String s = " ";
 
             for (int i = 0; i < arr1.length; i++) {
@@ -211,12 +195,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             tA1.setText(s);
-            //break;
+            break;
 
         }
+
+        /*
         board = Temp;
         board.Win();
-        /*
+
         for (int i = 0; i < B.size(); i++){
 
         }
