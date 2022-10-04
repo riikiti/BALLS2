@@ -16,6 +16,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
     int[][] arr = {{1, 0, 1},
@@ -167,61 +168,75 @@ public class MainActivity extends AppCompatActivity {
     // И после копирования из А не забудь проверить на конец
 
     public void Cheats(View view) {
-        int mas = 1000;
-        Stack A = new Stack(mas); // стек не пройденные
-        ArrayList<Board> B = new ArrayList<Board>(); // список пройденные
-         Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
+        Stack path = II();
+        Win();
+    }
+
+    public Stack II(){
+
+        Stack<State> O = new Stack(); // стек не пройденные
+        Stack<State> C = new Stack(); // список пройденные
+        State start = new State(arr);
+        //Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
-        Board Temp = new Board(arr); //заносим текущий борд во временный
-        Board temp1 = new Board(arr);
-        A.addElement(Temp);
+        //Board Temp = new Board(arr); //заносим текущий борд во временный
+        //Board temp1 = new Board(arr);
+        O.push(start);
+        while (!O.empty()) {
+
+            start = O.pop();
+
+            if (WinP()) {
+                break;
+            }
+
+            newState(start, O, C, 0, 0);
+            newState(start, O, C, 0, 1);
+            newState(start, O, C, 1, 0);
+            newState(start, O, C, 1, 1);
+
+            C.push(start);
+        }
+        Stack stack = new Stack  ();
+        for (; start.getParent() != null; start = start.getParent())
+            stack.push(start.getButton());
+return stack;
+    }
 
 
-        while (!Temp.Win()) {
-
-            for (Board el : B) {
-                if (A.readTop().getBoard() == el.getBoard()) {
-                    A.deleteElement();
+    public State Check(State temp1, State temp2) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (temp1.getBoard()[i][j] != temp2.getBoard()[i][j]) {
+                    return null;
                 }
-
-            }
-            Temp.setBoard(A.readTop().getBoard());
-            B.add(new Board(Temp.getBoard()));
-
-            steps++;
-            temp1.setBoard(Temp.getBoard());
-            // создали 4 новых состояния борда аля нажатия клавиш
-
-            A.addElement(new Board(Temp.Move(0, 0).getBoard()));
-            Temp.setBoard(temp1.getBoard());
-            A.addElement(new Board(Temp.Move(0, 1).getBoard()));
-            Temp.setBoard(temp1.getBoard());
-            A.addElement(new Board(Temp.Move(1, 0).getBoard()));
-            Temp.setBoard(temp1.getBoard());
-            A.addElement(new Board(Temp.Move(1, 1).getBoard()));
-            Temp.setBoard(temp1.getBoard());
-
-        }
-
-
-        board.setBoard(Temp.getBoard());
-        board.Win();
-
-    }
-    /*
-    public void Debug(){
-        TextView tA1 = findViewById(R.id.textView);
-        int [][] arr =A.readTop().getBoard();
-        String s = " ";
-
-        for (int i = 0; i < arr.length; i++){
-            for (int j = 0; j < arr.length; j++){
-                s += String.valueOf(arr[i][j]);
-
             }
         }
+        return temp1;
 
-        tA1.setText(s);
     }
-     */
+
+    public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
+        State child = new State(parent, x, y);
+        State used = null;
+        for (State temp : C) {
+            used = Check(temp, child);
+        }
+        if (used == null) {
+            for (State temp : O) {
+                used = Check(temp, child);
+            }
+        }
+        if (used == null) {
+            O.push(child);
+        }
+    }
+
+    public boolean WinP() {
+        if (arr[0][1] == 1 && arr[1][1] == 1 && arr[2][1] == 1) {
+            return true;
+        }
+        return false;
+    }
+
 }
