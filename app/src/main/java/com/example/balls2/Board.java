@@ -4,9 +4,9 @@ import android.widget.TextView;
 
 public class Board {
 
-    public int[][] board ={{1, 0, 1},
+    public int[][] board ={{0, 0, 0},
             {0, 0, 0},
-            {0, 1, 0},};
+            {0, 0, 0},};
 
 
     public int[][] getBoard() {
@@ -39,10 +39,10 @@ public class Board {
 
     public Board Move(int i, int j) {
 
-        int temp1 = board[i][j];
-        int temp2 = board[i][j + 1];
-        int temp3 = board[i + 1][j];
-        int temp4 = board[i + 1][j + 1];
+        int temp1 = this.board[i][j];
+        int temp2 = this.board[i][j + 1];
+        int temp3 = this.board[i + 1][j];
+        int temp4 = this.board[i + 1][j + 1];
 
         this.board[i][j] = temp3;
         this.board[i + 1][j] = temp4;
