@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -172,10 +170,10 @@ public class MainActivity extends AppCompatActivity {
     public void Cheats(View view) {
         Stack <Integer> path = II();
         while (!path.empty()) {
-           int btn = path.pop();
-           if (btn  == 0){
-               Swap1(view);
-           }
+            int btn = path.pop();
+            if (btn  == 0){
+                Swap1(view);
+            }
             if (btn  == 1){
                 Swap2(view);
             }
@@ -189,20 +187,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Stack II() {
+    public Stack II(){
 
-        Deque<State> O = new ArrayDeque(); // стек не пройденные
-        Deque<State> C = new ArrayDeque(); // список пройденные
+        Stack<State> O = new Stack(); // стек не пройденные
+        Stack<State> C = new Stack(); // список пройденные
         State start = new State(arr);
         //Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
-        O.addFirst(start);
-        while (!O.isEmpty()) {
-            start = O.removeFirst();
+        O.push(start);
+        while (!O.empty()) {
 
-            if (WinP()) {
+            start = O.pop();
+
+            if (WinP( start.getBoard())) {
                 break;
             }
 
@@ -213,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
             C.push(start);
         }
-        Stack <Integer> stack = new Stack <Integer> ();
+        Stack stack = new Stack  ();
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());
         return stack;
@@ -231,8 +230,7 @@ public class MainActivity extends AppCompatActivity {
         return temp1;
 
     }
-
-    public void newState(State parent, Deque<State> O, Deque<State> C, int x, int y) {
+    public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
         State child = new State(parent, x, y);
         State used = null;
 
@@ -241,7 +239,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-
         if (used == null) {
             for (State temp : O) {
                 if ((used = Check(temp, child)) != null) {
@@ -253,9 +250,8 @@ public class MainActivity extends AppCompatActivity {
             O.push(child);
         }
     }
-
-    public boolean WinP() {
-        if (arr[0][1] == 1 && arr[1][1] == 1 && arr[2][1] == 1) {
+    public boolean WinP( int [][] arr1) {
+        if (arr1[0][1] == 1 && arr1[1][1] == 1 && arr1[2][1] == 1) {
             return true;
         }
         return false;
