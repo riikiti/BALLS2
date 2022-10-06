@@ -3,14 +3,12 @@ package com.example.balls2;
 public class State {
 
     private State parent;
-    private int[][] board;
+    private int[][] board = new int[3][3];
     private int button;
 
     public State(int[][] board) {
-        for (int i = 0; i < board.length; ++i) {
-            //this.arr[i] = Arrays.copyOf(arr[i],arr[i].length);
-            //System.arraycopy(this.arr[i], 0, arr[i], 0, this.arr[i].length);
-            for (int j = 0; j < board[i].length; ++j) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
                 this.board[i][j] = board[i][j];
             }
         }

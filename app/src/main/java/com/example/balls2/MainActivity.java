@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -168,23 +170,37 @@ public class MainActivity extends AppCompatActivity {
     // И после копирования из А не забудь проверить на конец
 
     public void Cheats(View view) {
-        Stack path = II();
-        Win();
+        Stack <Integer> path = II();
+        while (!path.empty()) {
+           int btn = path.pop();
+           if (btn  == 0){
+               Swap1(view);
+           }
+            if (btn  == 1){
+                Swap2(view);
+            }
+            if (btn  == 2){
+                Swap3(view);
+            }
+            if (btn  == 3){
+                Swap4(view);
+            }
+
+        }
     }
 
-    public Stack II(){
+    public Stack II() {
 
-        Stack<State> O = new Stack(); // стек не пройденные
-        Stack<State> C = new Stack(); // список пройденные
+        Deque<State> O = new ArrayDeque(); // стек не пройденные
+        Deque<State> C = new ArrayDeque(); // список пройденные
         State start = new State(arr);
         //Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
-        O.push(start);
-        while (!O.empty()) {
-
-            start = O.pop();
+        O.addFirst(start);
+        while (!O.isEmpty()) {
+            start = O.removeFirst();
 
             if (WinP()) {
                 break;
@@ -197,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
 
             C.push(start);
         }
-        Stack stack = new Stack  ();
+        Stack <Integer> stack = new Stack <Integer> ();
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());
-return stack;
+        return stack;
     }
 
 
@@ -216,15 +232,21 @@ return stack;
 
     }
 
-    public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
+    public void newState(State parent, Deque<State> O, Deque<State> C, int x, int y) {
         State child = new State(parent, x, y);
         State used = null;
+
         for (State temp : C) {
-            used = Check(temp, child);
+            if ((used = Check(temp, child)) != null) {
+                break;
+            }
         }
+
         if (used == null) {
             for (State temp : O) {
-                used = Check(temp, child);
+                if ((used = Check(temp, child)) != null) {
+                    break;
+                }
             }
         }
         if (used == null) {
