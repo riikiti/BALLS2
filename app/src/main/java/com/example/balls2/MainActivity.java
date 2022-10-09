@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void Intent(int steps) {
+
+        Intent intent = new Intent(this, Result.class);
+        intent.putExtra("steps", steps);
+        startActivity(intent);
+    }
+
     public void Win() {
         TextView tA1 = findViewById(R.id.textView);
         tA1.setText(String.valueOf(board.getBoard()[0][1]));
@@ -45,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         tA4.setText(String.valueOf(steps));
 
         if (board.Win()) {
-            Intent intent = new Intent(this, Result.class);
-            intent.putExtra("steps", steps);
-            startActivity(intent);
+            Intent(steps);
         }
     }
 
@@ -168,26 +173,27 @@ public class MainActivity extends AppCompatActivity {
     // И после копирования из А не забудь проверить на конец
 
     public void Cheats(View view) {
-        Stack <Integer> path = II();
+        Stack<Integer> path = II();
         while (!path.empty()) {
             int btn = path.pop();
-            if (btn  == 0){
+            if (btn == 0) {
                 Swap1(view);
             }
-            if (btn  == 1){
+            if (btn == 1) {
                 Swap2(view);
             }
-            if (btn  == 2){
+            if (btn == 2) {
                 Swap3(view);
             }
-            if (btn  == 3){
+            if (btn == 3) {
                 Swap4(view);
             }
 
         }
+        Intent(steps);
     }
 
-    public Stack II(){
+    public Stack II() {
 
         Stack<State> O = new Stack(); // стек не пройденные
         Stack<State> C = new Stack(); // список пройденные
@@ -201,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
             start = O.pop();
 
-            if (WinP( start.getBoard())) {
+            if (WinP(start.getBoard())) {
                 break;
             }
 
@@ -212,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
             C.push(start);
         }
-        Stack stack = new Stack  ();
+        Stack stack = new Stack();
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());
         return stack;
@@ -230,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         return temp1;
 
     }
+
     public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
         State child = new State(parent, x, y);
         State used = null;
@@ -250,8 +257,9 @@ public class MainActivity extends AppCompatActivity {
             O.push(child);
         }
     }
-    public boolean WinP( int [][] arr1) {
-        if (arr1[0][1] == 1 && arr1[1][1] == 1 && arr1[2][1] == 1) {
+
+    public boolean WinP(int[][] arr1) {
+        if (arr1[0][0] == 1 && arr1[1][1] == 1 && arr1[2][2] == 1) {
             return true;
         }
         return false;
