@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -174,23 +175,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void Cheats(View view) {
         Stack<Integer> path = II();
-        while (!path.empty()) {
-            int btn = path.pop();
-            if (btn == 0) {
-                Swap1(view);
-            }
-            if (btn == 1) {
-                Swap2(view);
-            }
-            if (btn == 2) {
-                Swap3(view);
-            }
-            if (btn == 3) {
-                Swap4(view);
+        int count = path.size();
+        new CountDownTimer(5000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                if (!path.empty()) {
+                    int btn = path.pop();
+                    if (btn == 0) {
+                        Swap1(view);
+                    }
+                    if (btn == 1) {
+                        Swap2(view);
+                    }
+                    if (btn == 2) {
+                        Swap3(view);
+                    }
+                    if (btn == 3) {
+                        Swap4(view);
+                    }
+                }
             }
 
-        }
-        Intent(steps);
+            public void onFinish() {
+                Intent(steps);
+            }
+
+        }.start();
+
+
     }
 
     public Stack II() {
@@ -218,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
 
             C.push(start);
         }
+
+
         Stack stack = new Stack();
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());

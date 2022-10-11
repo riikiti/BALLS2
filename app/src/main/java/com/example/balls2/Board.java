@@ -35,6 +35,8 @@ public class Board {
         }
     }
 
+    //поиск с итеративным углублением
+    // gbnth yjhdbr bcreccdntyysq byntrktrn cjdhtvtyysq gjl[jl 133
     public Board Move(int i, int j) {
 
         int temp1 = this.board[i][j];
@@ -52,7 +54,7 @@ public class Board {
 
 
     public boolean Win() {
-        if (this.board[0][0] == 1 && this.board[1][1] == 1 && this.board[2][2] == 1) {
+        if (this.board[0][1] == 1 && this.board[1][1] == 1 && this.board[2][1] == 1) {
             return true;
         }
         return false;

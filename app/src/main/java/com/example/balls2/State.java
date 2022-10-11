@@ -11,8 +11,7 @@ public class State {
             for (int j = 0; j < 3; ++j) {
                 this.board[i][j] = board[i][j];
             }
-        }
-    }
+        }}
 
     public State(State parent, int x, int y) {
         this.parent = parent;
