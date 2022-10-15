@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tA4 = findViewById(R.id.textView4);
         tA4.setText(String.valueOf(steps));
 
-        if (board.Win()) {
+       /* if (board.Win()) {
             Intent(steps);
         }
+        */
     }
 
     public void Swap1(View view) {
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     public void Cheats(View view) {
         Stack<Integer> path = II();
         int count = path.size();
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(30000, 500) {
 
             public void onTick(long millisUntilFinished) {
                 if (!path.empty()) {
@@ -193,11 +194,14 @@ public class MainActivity extends AppCompatActivity {
                     if (btn == 3) {
                         Swap4(view);
                     }
+                }else {
+                    Intent(steps);
+                    onFinish();
                 }
             }
 
             public void onFinish() {
-                Intent(steps);
+                cancel();
             }
 
         }.start();
@@ -215,12 +219,17 @@ public class MainActivity extends AppCompatActivity {
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
         O.push(start);
-        while (!O.empty()) {
+        int depth = 0;
+        while (!O.empty() ) {
 
             start = O.pop();
 
             if (WinP(start.getBoard())) {
                 break;
+            }
+
+            if (O.size() == 0) {
+                depth++;
             }
 
             newState(start, O, C, 0, 0);
@@ -273,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean WinP(int[][] arr1) {
-        if (arr1[0][0] == 1 && arr1[1][1] == 1 && arr1[2][2] == 1) {
+        if (arr1[0][1] == 1 && arr1[1][1] == 1 && arr1[2][1] == 1) {
             return true;
         }
         return false;
