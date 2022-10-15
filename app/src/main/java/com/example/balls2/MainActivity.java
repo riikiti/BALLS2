@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             {0, 1, 0},};
     int steps = 0;
     Board board = new Board(arr);
-
+    int depth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,9 +177,10 @@ public class MainActivity extends AppCompatActivity {
     public void Cheats(View view) {
         Stack<Integer> path = II();
         int count = path.size();
-        new CountDownTimer(30000, 500) {
+        new CountDownTimer(100000, 500) {
 
             public void onTick(long millisUntilFinished) {
+
                 if (!path.empty()) {
                     int btn = path.pop();
                     if (btn == 0) {
@@ -194,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
                     if (btn == 3) {
                         Swap4(view);
                     }
-                }else {
-                    Intent(steps);
+                } else {
+                    Intent(depth);
                     onFinish();
                 }
             }
@@ -219,18 +220,16 @@ public class MainActivity extends AppCompatActivity {
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
         O.push(start);
-        int depth = 0;
-        while (!O.empty() ) {
 
+        while ( !O.empty()  ) {
+            depth++;
             start = O.pop();
 
             if (WinP(start.getBoard())) {
                 break;
             }
 
-            if (O.size() == 0) {
-                depth++;
-            }
+
 
             newState(start, O, C, 0, 0);
             newState(start, O, C, 0, 1);
@@ -238,12 +237,17 @@ public class MainActivity extends AppCompatActivity {
             newState(start, O, C, 1, 1);
 
             C.push(start);
+
+            if (depth == 15 ){
+                break;
+            }
         }
 
 
         Stack stack = new Stack();
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());
+
         return stack;
     }
 
