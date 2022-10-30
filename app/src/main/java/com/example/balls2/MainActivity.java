@@ -35,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
             {0, 0, 1},
             {1, 1, 0},};
     int steps = 0;
-    Board board = new Board();
+    Board board = new Board(arr);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        CircleDraw();
 
 
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tA4 = findViewById(R.id.textView4);
         tA4.setText(String.valueOf(steps));
 
-        if (board.Win()) {
+        if (WinP(board.getBoard())) {
             Intent(steps);
         }
     }

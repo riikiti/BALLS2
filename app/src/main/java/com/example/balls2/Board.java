@@ -58,12 +58,7 @@ public class Board {
     }
 
 
-    public boolean Win() {
-        if (this.board[0][1] == 1 && this.board[1][1] == 1 && this.board[2][1] == 1) {
-            return true;
-        }
-        return false;
-    }
+
 // 01 11 12
 
 
