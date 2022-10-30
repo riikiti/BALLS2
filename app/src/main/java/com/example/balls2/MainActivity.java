@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Board1(View view) {
-        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        CheckBox ch = (CheckBox) findViewById(R.id.checkBox);
         if (ch.isChecked()) {
             Rand = true;
         }
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Board2(View view) {
-        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        CheckBox ch = (CheckBox) findViewById(R.id.checkBox);
         if (ch.isChecked()) {
             Rand = true;
         }
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Board3(View view) {
-        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        CheckBox ch = (CheckBox) findViewById(R.id.checkBox);
         if (ch.isChecked()) {
             Rand = true;
         }
@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Board4(View view) {
-        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        CheckBox ch = (CheckBox) findViewById(R.id.checkBox);
         if (ch.isChecked()) {
             Rand = true;
         }
@@ -342,6 +342,12 @@ public class MainActivity extends AppCompatActivity {
         // Road.add(board);
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
+
+
+        // TODO: 23.10.2022 Для каждой точки рассчитывается F = G + H. G — расстояние от старта до точки, H — примерное расстояние от точки до цели.
+        //  Ограничить количество выделяемой памяти(удалять далекие?) тоесть если больше какого то значения F то просто не добавлять в стек
+        //  эврестическая оценка - растояние от точки начальной до точки назначения
+
         O.push(start);
         while (!O.empty()) {
 
