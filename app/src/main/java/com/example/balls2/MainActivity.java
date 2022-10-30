@@ -8,8 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -20,17 +22,29 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-    int[][] arr = {{1, 0, 1},
-            {0, 0, 0},
+    int[][] arr = {{0, 1, 0},
+            {0, 1, 0},
             {0, 1, 0},};
+    int[][] arr1 = {{0, 0, 0},
+            {0, 0, 0},
+            {1, 1, 1},};
+    int[][] arr2 = {{0, 0, 1},
+            {1, 0, 0},
+            {0, 1, 0},};
+    int[][] arr3 = {{0, 0, 0},
+            {0, 0, 1},
+            {1, 1, 0},};
     int steps = 0;
-    Board board = new Board(arr);
+    Board board = new Board();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
     }
 
@@ -157,6 +171,99 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void CircleDraw(){
+        ImageView img;
+        int[][] arr = board.getBoard();
+        if (arr[0][0]==1){
+            img = (ImageView) findViewById(R.id.imageView1);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView1);
+            img.setImageResource(R.drawable.empty);
+        }
+
+        if (arr[0][1]==1){
+            img = (ImageView) findViewById(R.id.imageView2);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView2);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[0][2]==1){
+            img = (ImageView) findViewById(R.id.imageView3);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView3);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[1][0]==1){
+            img = (ImageView) findViewById(R.id.imageView4);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView4);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[1][1]==1){
+            img = (ImageView) findViewById(R.id.imageView5);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView5);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[1][2]==1){
+            img = (ImageView) findViewById(R.id.imageView6);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView6);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[2][0]==1){
+            img = (ImageView) findViewById(R.id.imageView7);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView7);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[2][1]==1){
+            img = (ImageView) findViewById(R.id.imageView8);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView8);
+            img.setImageResource(R.drawable.empty);
+        }
+        if (arr[2][2]==1){
+            img = (ImageView) findViewById(R.id.imageView9);
+            img.setImageResource(R.drawable.circle);
+        }else {
+            img = (ImageView) findViewById(R.id.imageView9);
+            img.setImageResource(R.drawable.empty);
+        }
+
+    }
+
+    public void Board1(View view){
+
+        board=new Board(arr);
+        CircleDraw();
+        Cheats(view);
+    }
+    public void Board2(View view){
+        board=new Board(arr1);
+        CircleDraw();
+        Cheats(view);
+    }
+    public void Board3(View view){
+        board=new Board(arr2);
+        CircleDraw();
+        Cheats(view);
+    }
+    public void Board4(View view){
+        board=new Board(arr3);
+        CircleDraw();
+        Cheats(view);
+    }
+
+
     //todo существуют два стека
     // один не с пройденными --> A (при (нажатие на кнопку читов) / создание сразу занесены 4 состояния нажатия кнопок)
     // с пройденными состояниями --> B
@@ -176,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
     public void Cheats(View view) {
         Stack<Integer> path = II();
         int count = path.size();
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(count*1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 if (!path.empty()) {
@@ -194,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                         Swap4(view);
                     }
                 }
+
             }
 
             public void onFinish() {
@@ -209,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
         Stack<State> O = new Stack(); // стек не пройденные
         Stack<State> C = new Stack(); // список пройденные
-        State start = new State(arr);
+        State start = new State(board.getBoard());
         //Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
         //Board Temp = new Board(arr); //заносим текущий борд во временный
@@ -273,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean WinP(int[][] arr1) {
-        if (arr1[0][0] == 1 && arr1[1][1] == 1 && arr1[2][2] == 1) {
+        if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
             return true;
         }
         return false;

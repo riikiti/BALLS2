@@ -6,13 +6,18 @@ import java.util.Stack;
 
 public class Board {
 
-    public int[][] board = {{0, 0, 0},
+    public int[][] board= {{0, 0, 0},
             {0, 0, 0},
             {0, 0, 0},};
 
 
     public int[][] getBoard() {
         return board;
+    }
+
+
+    public Board() {
+
     }
 
     public Board(int[][] board) {

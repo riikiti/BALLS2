@@ -168,54 +168,85 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="122dp"
-        android:layout_height="33dp"
+        android:layout_width="32dp"
+        android:layout_height="22dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="85dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="26dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="84dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="34dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="84dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="32dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="174dp"
+        android:layout_width="80dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="308dp"
+        android:onClick="Board1"
         android:text="Button"
-        android:onClick="Cheats"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="77dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="212dp"
+        android:onClick="Board2"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="20dp"
+        android:onClick="Board3"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="80dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="20dp"
+        android:onClick="Board4"
+        android:text="Button"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
