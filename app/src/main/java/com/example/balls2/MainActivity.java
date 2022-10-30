@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             {1, 1, 0},};
     int steps = 0;
     Board board = new Board(arr);
+    boolean Rand = false;
 
 
     @Override
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CircleDraw();
-
 
 
     }
@@ -171,94 +172,113 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void CircleDraw(){
+    public void CircleDraw() {
         ImageView img;
         int[][] arr = board.getBoard();
-        if (arr[0][0]==1){
+        if (arr[0][0] == 1) {
             img = (ImageView) findViewById(R.id.imageView1);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView1);
             img.setImageResource(R.drawable.empty);
         }
 
-        if (arr[0][1]==1){
+        if (arr[0][1] == 1) {
             img = (ImageView) findViewById(R.id.imageView2);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView2);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[0][2]==1){
+        if (arr[0][2] == 1) {
             img = (ImageView) findViewById(R.id.imageView3);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView3);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[1][0]==1){
+        if (arr[1][0] == 1) {
             img = (ImageView) findViewById(R.id.imageView4);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView4);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[1][1]==1){
+        if (arr[1][1] == 1) {
             img = (ImageView) findViewById(R.id.imageView5);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView5);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[1][2]==1){
+        if (arr[1][2] == 1) {
             img = (ImageView) findViewById(R.id.imageView6);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView6);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[2][0]==1){
+        if (arr[2][0] == 1) {
             img = (ImageView) findViewById(R.id.imageView7);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView7);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[2][1]==1){
+        if (arr[2][1] == 1) {
             img = (ImageView) findViewById(R.id.imageView8);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView8);
             img.setImageResource(R.drawable.empty);
         }
-        if (arr[2][2]==1){
+        if (arr[2][2] == 1) {
             img = (ImageView) findViewById(R.id.imageView9);
             img.setImageResource(R.drawable.circle);
-        }else {
+        } else {
             img = (ImageView) findViewById(R.id.imageView9);
             img.setImageResource(R.drawable.empty);
         }
 
     }
 
-    public void Board1(View view){
+    public void Board1(View view) {
+        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        if (ch.isChecked()) {
+            Rand = true;
+        }
 
-        board=new Board(arr);
+        board = new Board(arr);
         CircleDraw();
         Cheats(view);
     }
-    public void Board2(View view){
-        board=new Board(arr1);
+
+    public void Board2(View view) {
+        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        if (ch.isChecked()) {
+            Rand = true;
+        }
+        board = new Board(arr1);
         CircleDraw();
         Cheats(view);
     }
-    public void Board3(View view){
-        board=new Board(arr2);
+
+    public void Board3(View view) {
+        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        if (ch.isChecked()) {
+            Rand = true;
+        }
+        board = new Board(arr2);
         CircleDraw();
         Cheats(view);
     }
-    public void Board4(View view){
-        board=new Board(arr3);
+
+    public void Board4(View view) {
+        CheckBox ch = (CheckBox)findViewById(R.id.checkBox);
+        if (ch.isChecked()) {
+            Rand = true;
+        }
+        board = new Board(arr3);
         CircleDraw();
         Cheats(view);
     }
@@ -283,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
     public void Cheats(View view) {
         Stack<Integer> path = II();
         int count = path.size();
-        new CountDownTimer(count*1000, 1000) {
+        new CountDownTimer(count * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 if (!path.empty()) {
@@ -305,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                Intent(steps);
+                // Intent(steps);
             }
 
         }.start();
@@ -381,7 +401,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean WinP(int[][] arr1) {
-        if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
+        int a = (int) (Math.random() * 3);
+
+        if (Rand == true) {
+            switch (a) {
+                case 0:
+                    if (arr1[1][0] == 1 && arr1[0][0] == 1 && arr1[1][2] == 1) {
+                        return true;
+                    }
+                case 1:
+                    if (arr1[1][1] == 1 && arr1[2][1] == 1 && arr1[1][2] == 1) {
+                        return true;
+                    }
+                case 2:
+                    if (arr1[1][2] == 1 && arr1[1][1] == 1 && arr1[2][2] == 1) {
+                        return true;
+                    }
+
+            }
+
+        } else if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
             return true;
         }
         return false;
