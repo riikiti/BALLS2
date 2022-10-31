@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -335,23 +336,24 @@ public class MainActivity extends AppCompatActivity {
 
     public Stack II() {
 
-        Stack<State> O = new Stack(); // стек не пройденные
-        Stack<State> C = new Stack(); // список пройденные
+        ArrayList<State> O = new ArrayList<State>(); // стек не пройденные
+        ArrayList<State> C = new ArrayList<State>(); // список пройденные
         State start = new State(board.getBoard());
         //Queue<Board> Road = new LinkedList<Board>(); // очередь для вывода решения
         // Road.add(board);
         //Board Temp = new Board(arr); //заносим текущий борд во временный
         //Board temp1 = new Board(arr);
+int step = 0;
 
 
         // TODO: 23.10.2022 Для каждой точки рассчитывается F = G + H. G — расстояние от старта до точки, H — примерное расстояние от точки до цели.
         //  Ограничить количество выделяемой памяти(удалять далекие?) тоесть если больше какого то значения F то просто не добавлять в стек
         //  эврестическая оценка - растояние от точки начальной до точки назначения
 
-        O.push(start);
-        while (!O.empty()) {
+        O.add(start);
+        while (!O.isEmpty()) {
 
-            start = O.pop();
+            O.add(start);
 
             if (WinP(start.getBoard())) {
                 break;
@@ -362,7 +364,10 @@ public class MainActivity extends AppCompatActivity {
             newState(start, O, C, 1, 0);
             newState(start, O, C, 1, 1);
 
-            C.push(start);
+
+
+
+            C.add(start);
         }
 
 
@@ -370,6 +375,20 @@ public class MainActivity extends AppCompatActivity {
         for (; start.getParent() != null; start = start.getParent())
             stack.push(start.getButton());
         return stack;
+    }
+
+    public int heuristicValue(State state, int G) {
+        int F = 0;
+        int H = 0;
+        // находим ближайшие точки текущего состояния и проверяем насколько кажадя из них далека от ближней точки победного состояния
+        int[][] arr1 = state.getBoard();
+        if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
+
+        }
+
+
+
+        return F = G + H;
     }
 
 
@@ -385,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
+    public void newState(State parent, ArrayList<State> O, ArrayList<State> C, int x, int y) {
         State child = new State(parent, x, y);
         State used = null;
 
@@ -402,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (used == null) {
-            O.push(child);
+            O.add(child);
         }
     }
 
