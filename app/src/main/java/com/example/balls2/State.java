@@ -1,10 +1,20 @@
 package com.example.balls2;
 
-public class State {
+public class State implements Comparable<State> {
 
     private State parent;
     private int[][] board = new int[3][3];
     private int button;
+
+    public int getF() {
+        return F;
+    }
+
+    public void setF(int f) {
+        F = f;
+    }
+
+    private int F;
 
     public State(int[][] board) {
         for (int i = 0; i < 3; ++i) {
@@ -48,6 +58,9 @@ public class State {
     public int getButton() {
         return button;
     }
+    public void setButton(int button) {
+      this.button = button;
+    }
 
     public int[][] getBoard() {
         return board;
@@ -55,5 +68,13 @@ public class State {
 
     public State getParent() {
         return parent;
+    }
+
+    @Override
+    public int compareTo(State state) {
+        int compareQuantity = ((State) state).getF();
+
+        //ascending order
+        return this.F - compareQuantity;
     }
 }

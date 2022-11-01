@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
         }
         board = new Board(arr3);
         CircleDraw();
-        Cheats(view);
+        heuristic();
     }
 
 
@@ -390,36 +391,69 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<State> O = new ArrayList<State>();// лист не пройденные
         ArrayList<State> C = new ArrayList<State>();// лист пройденные
         State start = new State(board.getBoard());
-        while (!O.isEmpty()) {
-
-             O.add(start);
+        State[] mas = {};
+        int steps = 0;
+        while (!O.isEmpty() || C.size() < 10) {
+            O.add(start);
 
             if (WinP(start.getBoard())) {
                 break;
             }
 
-            newStateHeuristic(start, O, C, 0, 0);
-            newStateHeuristic(start, O, C, 0, 1);
-            newStateHeuristic(start, O, C, 1, 0);
-            newStateHeuristic(start, O, C, 1, 1);
+            mas[0] = newStateHeuristic(start, O, C, 0, 0, steps);
+            mas[1] = newStateHeuristic(start, O, C, 0, 1, steps);
+            mas[2] = newStateHeuristic(start, O, C, 1, 0, steps);
+            mas[3] = newStateHeuristic(start, O, C, 1, 1, steps);
+
+            Arrays.sort(mas);
+
 
             C.add(start);
+            steps++;
         }
 
 
-        return O;
+        return C;
     }
 
     public int heuristicValue(State state, int G) {
         int F = 0;
         int H = 0;
+        int[][] board = state.getBoard();
         // находим ближайшие точки текущего состояния и проверяем насколько кажадя из них далека от ближней точки победного состояния
         int[][] arr1 = state.getBoard();
         if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
+            H = 0;
+        } else {
 
         }
 
         return F = G + H;
+    }
+
+
+    public State newStateHeuristic(State parent, ArrayList<State> O, ArrayList<State> C, int x, int y, int steps) {
+        State child = new State(parent, x, y);
+        int F = heuristicValue(child, steps);
+        child.setF(F);
+        State used = null;
+
+        for (State temp : C) {
+            if ((used = Check(temp, child)) != null) {
+                break;
+            }
+        }
+        if (used == null) {
+            for (State temp : O) {
+                if ((used = Check(temp, child)) != null) {
+                    break;
+                }
+            }
+        }
+        if (used == null) {
+            O.add(child);
+        }
+        return child;
     }
 
 
@@ -443,28 +477,6 @@ public class MainActivity extends AppCompatActivity {
             O.push(child);
         }
     }
-
-    public void newStateHeuristic(State parent, ArrayList<State> O, ArrayList<State> C, int x, int y) {
-        State child = new State(parent, x, y);
-        State used = null;
-
-        for (State temp : C) {
-            if ((used = Check(temp, child)) != null) {
-                break;
-            }
-        }
-        if (used == null) {
-            for (State temp : O) {
-                if ((used = Check(temp, child)) != null) {
-                    break;
-                }
-            }
-        }
-        if (used == null) {
-            O.push(child);
-        }
-    }
-
 
     public boolean WinP(int[][] arr1) {
         int a = (int) (Math.random() * 3);
