@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -385,6 +386,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public ArrayList heuristic() {
+        ArrayList<State> O = new ArrayList<State>();// лист не пройденные
+        ArrayList<State> C = new ArrayList<State>();// лист пройденные
+        State start = new State(board.getBoard());
+        while (!O.isEmpty()) {
+
+             O.add(start);
+
+            if (WinP(start.getBoard())) {
+                break;
+            }
+
+            newStateHeuristic(start, O, C, 0, 0);
+            newStateHeuristic(start, O, C, 0, 1);
+            newStateHeuristic(start, O, C, 1, 0);
+            newStateHeuristic(start, O, C, 1, 1);
+
+            C.add(start);
+        }
+
+
+        return O;
+    }
+
+    public int heuristicValue(State state, int G) {
+        int F = 0;
+        int H = 0;
+        // находим ближайшие точки текущего состояния и проверяем насколько кажадя из них далека от ближней точки победного состояния
+        int[][] arr1 = state.getBoard();
+        if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
+
+        }
+
+        return F = G + H;
+    }
+
+
     public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
         State child = new State(parent, x, y);
         State used = null;
@@ -405,6 +443,28 @@ public class MainActivity extends AppCompatActivity {
             O.push(child);
         }
     }
+
+    public void newStateHeuristic(State parent, ArrayList<State> O, ArrayList<State> C, int x, int y) {
+        State child = new State(parent, x, y);
+        State used = null;
+
+        for (State temp : C) {
+            if ((used = Check(temp, child)) != null) {
+                break;
+            }
+        }
+        if (used == null) {
+            for (State temp : O) {
+                if ((used = Check(temp, child)) != null) {
+                    break;
+                }
+            }
+        }
+        if (used == null) {
+            O.push(child);
+        }
+    }
+
 
     public boolean WinP(int[][] arr1) {
         int a = (int) (Math.random() * 3);
