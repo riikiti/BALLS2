@@ -406,10 +406,21 @@ public class MainActivity extends AppCompatActivity {
             mas[3] = newStateHeuristic(start, O, C, 1, 1, steps);
 
             Arrays.sort(mas);
-
+            start.setF(mas[0].getF());
+            start.setButton(mas[0].getButton());
+            start.setBoard(mas[0].getBoard());
 
             C.add(start);
             steps++;
+
+            for (State el : C) {
+                //перезаписываем состояние схожил стейтов , но с лучшим приотритетом (F)
+                if (heuristicSame(el, start)) {
+                    State parent = el.getParent();
+                    el = new State(start.getBoard());
+                    el.setParent(parent);
+                }
+            }
         }
 
 
@@ -431,6 +442,15 @@ public class MainActivity extends AppCompatActivity {
         return F = G + H;
     }
 
+
+    public boolean heuristicSame(State state1, State state2) {
+        if (state1.getBoard().equals(state2.getBoard())) {
+            if (state1.getF() > state2.getF()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public State newStateHeuristic(State parent, ArrayList<State> O, ArrayList<State> C, int x, int y, int steps) {
         State child = new State(parent, x, y);

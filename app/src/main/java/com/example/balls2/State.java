@@ -16,12 +16,26 @@ public class State implements Comparable<State> {
 
     private int F;
 
+    public void setParent(State parent) {
+        this.parent = parent;
+    }
+
+
     public State(int[][] board) {
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
                 this.board[i][j] = board[i][j];
             }
-        }}
+        }
+    }
+
+    public void setBoard(int[][] board) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                this.board[i][j] = board[i][j];
+            }
+        }
+    }
 
     public State(State parent, int x, int y) {
         this.parent = parent;
@@ -58,8 +72,9 @@ public class State implements Comparable<State> {
     public int getButton() {
         return button;
     }
+
     public void setButton(int button) {
-      this.button = button;
+        this.button = button;
     }
 
     public int[][] getBoard() {
