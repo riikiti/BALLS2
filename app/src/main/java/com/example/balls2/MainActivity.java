@@ -436,10 +436,11 @@ public class MainActivity extends AppCompatActivity {
         if (arr1[1][0] == 1 && arr1[1][1] == 1 && arr1[1][2] == 1) {
             H = 0;
         } else {
-
+            int btn = state.getButton();
+            H = CheckDistance(btn, state);
         }
-
-        return F = G + H;
+        F = G + H;
+        return F;
     }
 
 
@@ -476,6 +477,46 @@ public class MainActivity extends AppCompatActivity {
         return child;
     }
 
+
+    public int CheckDistance(int btn, State state) {
+        int[][] board = state.getBoard();
+        int x = 0, y = 0;
+        if (btn == 1) {
+            x = 0;
+            y = 0;
+        }
+
+        if (btn == 2) {
+            x = 1;
+            y = 0;
+        }
+
+        if (btn == 3) {
+            x = 0;
+            y = 1;
+        }
+
+        if (btn == 4) {
+            x = 1;
+            y = 1;
+        }
+
+        int H = 0;
+        int[][] arr1 = {{0, 0, 0},
+                {1, 1, 1},
+                {0, 0, 0},};
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] != arr1[i][j] || i != x || j != y) {
+                    H++;
+                }
+            }
+        }
+
+
+        return H;
+    }
 
     public void newState(State parent, Stack<State> O, Stack<State> C, int x, int y) {
         State child = new State(parent, x, y);
